@@ -28,8 +28,8 @@
     aria-label="Default select example"
     >
     <option selected>Seleccione una opción</option>
-    <option value="activo" {{$disquera->estadoDisquera == 'activo' ? 'selected':'true'}}>Activo</option>
-    <option value="inactivo" {{$disquera->estadoDisquera == 'inactivo' ? 'selected':'true'}}>Inactivo</option>
+    <option value="activo" {{isset($disquera->estadoDisquera) && $disquera->estadoDisquera == 'activo' ? 'selected':'true'}}>Activo</option>
+    <option value="inactivo" {{isset($disquera->estadoDisquera) && $disquera->estadoDisquera == 'inactivo' ? 'selected':'true'}}>Inactivo</option>
     </select>
 </div>
 

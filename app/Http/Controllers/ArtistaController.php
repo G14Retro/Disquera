@@ -41,9 +41,10 @@ class ArtistaController extends Controller
     {
         $datos = $request->except('_token');
         if ($request->hasFile('foto')) {
-           $datos['foto'] = $request->file('foto')->store('uploads','public');
+        $datos['foto'] = $request->file('foto')->getClientOriginalName();
+        $artista = Artista::create($datos);
+        $request->file('foto')->storeAs('public/uploads/'.$artista->id, $datos['foto']);
         }
-        Artista::insert($datos);
         return redirect('artista');
     }
 
@@ -84,9 +85,10 @@ class ArtistaController extends Controller
 
         if ($request->hasFile('foto')) {
             $artista = Artista::findOrfail($id);
-            Storage::delete('/storage/app/public/'.$artista->foto);
+            Storage::delete('public/uploads', $artista->foto);
+            $datos['foto'] = $request->file('foto')->getClientOriginalName();
+            $request->file('foto')->storeAs('public/uploads', $datos['foto']);
         }
-        $datos['foto'] = $request->file('foto')->store('uploads');
 
         Artista::where('id','=',$id)->update($datos);
         return redirect('artista');

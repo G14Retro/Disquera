@@ -39,6 +39,9 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{{ url('cancion') }}">Canciones <span class="sr-only">(current)</span></a>
                         </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('disquera') }}">Disqueras <span class="sr-only">(current)</span></a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

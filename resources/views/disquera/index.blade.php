@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+<div class="float-right m-3">
+    <a class="btn btn-primary" href="{{url('/disquera/create')}}">Nuevo</a>
+</div>
 <table class="table table-striped">
 <tbody>
     @foreach($disqueras as $d)

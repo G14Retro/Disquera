@@ -2,11 +2,14 @@
 @section('content')
 <table class="table table-striped">
 <tbody>
+    <div class="float-right m-3">
+        <a class="btn btn-primary" href="{{url('/artista/create')}}">Nuevo</a>
+    </div>
         <div class="container">
             <div class="row">
     @foreach($artistas as $a)
             <div class="card mr-3" style="width: 18rem;">
-                <img src="{{ asset('storage').'/'.$a->foto}}" class="card-img-top">
+                <img src="{{ asset('storage').'/uploads/'.$a->id.'/'.$a->foto}}" class="card-img-top">
                 <div class="card-body bg-secondary">
                     <h5 class="card-title text-light">{{$a->nombreArtistico}}</h5>
                     <div class="row">
