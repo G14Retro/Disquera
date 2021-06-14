@@ -14,7 +14,7 @@ class AddFotoToAlbumes extends Migration
     public function up()
     {
         Schema::table('albumes', function (Blueprint $table) {
-            //
+            $table->string('foto',100)->after('anioPublicacion');
         });
     }
 
@@ -26,7 +26,7 @@ class AddFotoToAlbumes extends Migration
     public function down()
     {
         Schema::table('albumes', function (Blueprint $table) {
-            //
+            $table->dropColumn('foto');
         });
     }
 }

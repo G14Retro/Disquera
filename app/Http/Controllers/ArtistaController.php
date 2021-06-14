@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Artista;
 use App\Disquera;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArtistaController extends Controller
 {
@@ -15,7 +16,8 @@ class ArtistaController extends Controller
      */
     public function index()
     {
-        return view('artista.index');
+        $registros['artistas'] = Artista::paginate(10);
+        return view('artista.index',$registros);
     }
 
     /**
@@ -38,8 +40,11 @@ class ArtistaController extends Controller
     public function store(Request $request)
     {
         $datos = $request->except('_token');
+        if ($request->hasFile('foto')) {
+           $datos['foto'] = $request->file('foto')->store('uploads','public');
+        }
         Artista::insert($datos);
-        return ;
+        return redirect('artista');
     }
 
     /**
@@ -59,9 +64,11 @@ class ArtistaController extends Controller
      * @param  \App\Artista  $artista
      * @return \Illuminate\Http\Response
      */
-    public function edit(Artista $artista)
+    public function edit($id)
     {
-        return view('artista.edit');
+        $artista = Artista::findOrfail($id);
+        $disqueras['disqueras'] = Disquera::all();
+        return view('artista.edit',compact('artista'),$disqueras);
     }
 
     /**
@@ -71,9 +78,18 @@ class ArtistaController extends Controller
      * @param  \App\Artista  $artista
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Artista $artista)
+    public function update(Request $request, $id)
     {
-        //
+        $datos = $request->except('_token','_method');
+
+        if ($request->hasFile('foto')) {
+            $artista = Artista::findOrfail($id);
+            Storage::delete('/storage/app/public/'.$artista->foto);
+        }
+        $datos['foto'] = $request->file('foto')->store('uploads');
+
+        Artista::where('id','=',$id)->update($datos);
+        return redirect('artista');
     }
 
     /**
@@ -82,7 +98,7 @@ class ArtistaController extends Controller
      * @param  \App\Artista  $artista
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Artista $artista)
+    public function destroy($id)
     {
         //
     }

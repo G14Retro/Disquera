@@ -14,7 +14,7 @@ class AddFotoToArtistas extends Migration
     public function up()
     {
         Schema::table('artistas', function (Blueprint $table) {
-            //
+            $table->string('foto',100)->after('nombreArtistico');
         });
     }
 
@@ -26,7 +26,7 @@ class AddFotoToArtistas extends Migration
     public function down()
     {
         Schema::table('artistas', function (Blueprint $table) {
-            //
+            $table->dropColumn('foto');
         });
     }
 }
