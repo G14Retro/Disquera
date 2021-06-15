@@ -85,9 +85,9 @@ class ArtistaController extends Controller
 
         if ($request->hasFile('foto')) {
             $artista = Artista::findOrfail($id);
-            Storage::delete('public/uploads', $artista->foto);
+            Storage::delete('public/uploads/'.$artista->id.'/'. $artista->foto);
             $datos['foto'] = $request->file('foto')->getClientOriginalName();
-            $request->file('foto')->storeAs('public/uploads', $datos['foto']);
+            $request->file('foto')->storeAs('public/uploads/'.$artista->id, $datos['foto']);
         }
 
         Artista::where('id','=',$id)->update($datos);
@@ -102,6 +102,9 @@ class ArtistaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $artista = Artista::findOrfail($id);
+        Storage::delete('public/uploads/'.$id. '/'. $artista->foto);
+        Artista::destroy($id);
+        return redirect('artista');
     }
 }
