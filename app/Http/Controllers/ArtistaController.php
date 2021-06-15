@@ -103,7 +103,7 @@ class ArtistaController extends Controller
     public function destroy($id)
     {
         $artista = Artista::findOrfail($id);
-        Storage::delete('public/uploads/'.$id. '/'. $artista->foto);
+        Storage::deleteDirectory('public/uploads/'.$id);
         Artista::destroy($id);
         return redirect('artista');
     }

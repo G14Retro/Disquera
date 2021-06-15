@@ -5,6 +5,16 @@
 </div>
 <table class="table table-striped">
 <tbody>
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nit</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Estado</th>
+          </tr>
+    </thead>
     @foreach($disqueras as $d)
     <tr>
         <th scope="row">{{$d->id}}</th>
