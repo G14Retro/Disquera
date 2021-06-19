@@ -1,7 +1,8 @@
 <div class="mb-3">
     <label for="nombreAlbum">Nombre</label>
     <input type="text" name="nombreAlbum" id="nombreAlbum" class="form-control"
-    placeholder="Ingrese el nombre del album">
+    placeholder="Ingrese el nombre del album"
+    value="{{isset($album->nombreAlbum)?$album->nombreAlbum:''}}">
 </div>
 <div class="mb-3">
     <label for="anioPublicacion">Año de publicación</label>
@@ -9,10 +10,15 @@
     aria-label="Default select example">
     <option selected>Seleccione una opción</option>
     @for($anio=1990;$anio <=2021;$anio++)
-    <option value="{{$anio}}">{{$anio}}</option>
+    <option value="{{$anio}}" {{isset($album->anioPublicacion) && $album->anioPublicacion == $anio ? 'selected':'true'}}>{{$anio}}</option>
     @endfor
     </select>
-
+</div>
+<div class="row">
+    <div class="ml-3 mb-3">
+        <label for="foto">Foto portada</label>
+        <input type="file" name="foto" id="foto" class="form-control">
+    </div>
 </div>
 <div class="mb-3">
 <label for="idArtistaFK">Artista</label>

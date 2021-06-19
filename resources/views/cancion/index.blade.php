@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
-Aca se va ha cargar el listado de canciones
+<div class="float-right m-3">
+    <a class="btn btn-primary" href="{{url('/cancion/create')}}">Nuevo</a>
+</div>
 @endsection
-

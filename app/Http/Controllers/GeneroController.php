@@ -14,7 +14,8 @@ class GeneroController extends Controller
      */
     public function index()
     {
-        return view('genero.index');
+        $registros['generos'] = Genero::paginate(10);
+        return view('genero.index',$registros);
     }
 
     /**
@@ -37,7 +38,7 @@ class GeneroController extends Controller
     {
         $datos = $request->except('_token');
         Genero::insert($datos);
-        return view('genero.create');
+        return redirect('genero-musical');
     }
 
     /**
@@ -69,9 +70,11 @@ class GeneroController extends Controller
      * @param  \App\Genero  $genero
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Genero $genero)
+    public function update(Request $request, $id)
     {
-        //
+        $datos = $request->except('_token','_method');
+        Genero::where('id','=',$id)->update($datos);
+        return redirect('genero-musical');
     }
 
     /**
@@ -80,8 +83,9 @@ class GeneroController extends Controller
      * @param  \App\Genero  $genero
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Genero $genero)
+    public function destroy($id)
     {
-        //
+        Genero::destroy($id);
+        return redirect('genero-musical');
     }
 }

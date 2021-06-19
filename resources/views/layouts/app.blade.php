@@ -43,7 +43,10 @@
                             <a class="nav-link" href="{{ url('disquera') }}">Disqueras <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="{{ url('disquera') }}">Albumes <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ url('album') }}">Albumes <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{ url('genero-musical') }}">Generos <span class="sr-only">(current)</span></a>
                         </li>
                     </ul>
 

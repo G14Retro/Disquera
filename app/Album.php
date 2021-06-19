@@ -8,6 +8,7 @@ class Album extends Model
 {
     protected $table = 'albumes';
     protected $fillable = [
-        'nombreAlbum','anioPublicacion', 'idArtistaFK', 'idGeneroFK',
+        'nombreAlbum','anioPublicacion','foto' , 'idArtistaFK', 'idGeneroFK',
     ];
+    public $timestamps = false;
 }

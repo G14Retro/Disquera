@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cancion;
+use App\Album;
 use Illuminate\Http\Request;
 
 class CancionController extends Controller
@@ -24,7 +25,8 @@ class CancionController extends Controller
      */
     public function create()
     {
-        return view('cancion.create');
+        $albumes['albumes'] = Album::all();
+        return view('cancion.create',$albumes);
     }
 
     /**

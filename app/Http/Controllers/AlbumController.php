@@ -18,7 +18,10 @@ class AlbumController extends Controller
      */
     public function index()
     {
-        $registros['albumes'] = Album::paginate(10);
+        $registros['albumes'] = Album::join('artistas','albumes.idArtistaFK','artistas.id')
+        ->join('generos','generos.id','albumes.idGeneroFK')
+        ->select('albumes.id','albumes.nombreAlbum','albumes.anioPublicacion','albumes.foto','artistas.nombreArtistico','generos.nombreGenero')
+        ->get();
         return view('album.index',$registros);
     }
 
@@ -43,9 +46,12 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        $fecha =Carbon::parse($request->anioPubliacion);
         $datos = $request->except('_token');
-        Album::insert($datos);
+        if ($request->hasFile('foto')) {
+            $datos['foto'] = $request->file('foto')->getClientOriginalName();
+            $album = Album::create($datos);            
+            $request->file('foto')->storeAs('public/uploads/albumes/'.$album->id, $datos['foto']);
+            }
         return redirect('album');
     }
 
@@ -66,9 +72,12 @@ class AlbumController extends Controller
      * @param  \App\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function edit(Album $album)
+    public function edit($id)
     {
-        return view('album.edit');
+        $album = Album::findOrFail($id);
+        $artistas['artistas'] = Artista::all();
+        $generos['generos'] = Genero::all();
+        return view('album.edit',compact('album'),$artistas,$generos);
     }
 
     /**
@@ -78,9 +87,11 @@ class AlbumController extends Controller
      * @param  \App\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Album $album)
+    public function update(Request $request, $id)
     {
-        //
+        $datos = $request->except('_token','_method');
+        Album::where('id','=',$id)->update($datos);
+        return redirect('disquera');
     }
 
     /**
@@ -89,8 +100,9 @@ class AlbumController extends Controller
      * @param  \App\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Album $album)
+    public function destroy($id)
     {
-        //
+        Album::destroy($id);
+        return redirect('album');
     }
 }
