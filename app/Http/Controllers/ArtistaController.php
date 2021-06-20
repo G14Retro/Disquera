@@ -39,6 +39,22 @@ class ArtistaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $campos = [
+            'tipoDocumento'         =>  'required',
+            'noDocumento'           =>  'required|numeric|min:6',
+            'nombreArtista'         =>  'required|string|max:30',
+            'apellidoArtista'       =>  'required|string|max:30',
+            'nombreArtistico'       =>  'required|string|max:40',
+            'foto'                  =>  'required',
+            'feNacimAtista'         =>  'required|date',
+            'emailArtista'          =>  'required|email|max:50',
+            'idDisqueraFK'          =>  'required',
+            'estadoArtista'         =>  'required',
+        ];
+
+        $this->validate($request,$campos);
+
         $datos = $request->except('_token');
         if ($request->hasFile('foto')) {
         $datos['foto'] = $request->file('foto')->getClientOriginalName();

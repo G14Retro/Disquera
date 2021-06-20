@@ -19,11 +19,17 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/artista/create', [ArtistaController::class,'create']);
 
-Route::resource('album', AlbumController::class);
-Route::resource('artista', ArtistaController::class);
-Route::resource('cancion', CancionController::class);
-Route::resource('disquera', DisqueraController::class);
-Route::resource('genero-musical', GeneroController::class);
+Route::resource('album', AlbumController::class)->middleware('auth');
+Route::resource('artista', ArtistaController::class)->middleware('auth');
+Route::resource('cancion', CancionController::class)->middleware('auth');
+Route::resource('disquera', DisqueraController::class)->middleware('auth');
+Route::resource('genero-musical', GeneroController::class)->middleware('auth');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/',function(){
+    return view('auth.login');
+});
+Route::get('/home', 'ArtistaController@index')->name('artista');
+Route::group(['middleware'=>'auth'],function(){
+    Route::get('/home', 'ArtistaController@index')->name('artista');
+});

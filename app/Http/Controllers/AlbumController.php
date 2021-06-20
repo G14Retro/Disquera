@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Album;
 use App\Genero;
 use App\Artista;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class AlbumController extends Controller
 {
@@ -32,7 +30,6 @@ class AlbumController extends Controller
      */
     public function create()
     {
-        $anioPresente = intval(Carbon::now()->format('Y'));
         $generos['generos'] = Genero::all();
         $artistas['artistas'] = Artista::all();
         return view('album.create',$generos,$artistas);
@@ -75,9 +72,9 @@ class AlbumController extends Controller
     public function edit($id)
     {
         $album = Album::findOrFail($id);
-        $artistas['artistas'] = Artista::all();
-        $generos['generos'] = Genero::all();
-        return view('album.edit',compact('album'),$artistas,$generos);
+        $generos = Genero::all();
+        $artistas = Artista::all();
+        return view('album.edit',compact('album','artistas','generos'));
     }
 
     /**
@@ -89,9 +86,15 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $datos = $request->except('_token','_method');
+        if ($request->hasFile('foto')) {
+            $album = Album::findOrfail($id);            
+            $datos['foto'] = $request->file('foto')->getClientOriginalName();
+            $request->file('foto')->storeAs('public/uploads/albumes/'.$album->id, $datos['foto']);
+            }
         Album::where('id','=',$id)->update($datos);
-        return redirect('disquera');
+        return redirect('album');
     }
 
     /**

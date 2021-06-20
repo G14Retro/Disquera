@@ -36,6 +36,14 @@ class DisqueraController extends Controller
      */
     public function store(Request $request)
     {
+        $campos = [
+            'nit_disquera'      => 'required|numeric|min:5',
+            'nombreDisquera'    => 'required|string|max:30',
+            'telefonoDisquera'  => 'required|numeric|min:7',
+            'direccionDisquera' => 'required|string|min:5|max:50',
+            'estadoDisquera'    => 'required',
+        ];
+        $this->validate($request,$campos);
         $disquera = $request->except('_token');
         Disquera::insert($disquera);
         return redirect('disquera');

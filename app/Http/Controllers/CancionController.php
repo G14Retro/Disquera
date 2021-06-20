@@ -15,7 +15,11 @@ class CancionController extends Controller
      */
     public function index()
     {
-        return view('cancion.index');
+        $registros['canciones'] = Cancion::join('albumes','albumes.id','canciones.idAlbumFK')
+        ->select('canciones.id','canciones.nombreCancion','canciones.fechaGrabacion','canciones.duracionCancion',
+                'albumes.nombreAlbum','canciones.estadoCancion')
+        ->get();
+        return view('cancion.index',$registros);
     }
 
     /**
@@ -37,7 +41,17 @@ class CancionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $campos = [
+            'nombreCancion'     => 'required|string',
+            'fechaGrabacion'    => 'required|date',
+            'duracionCancion'   => 'required|string',
+            'idAlbumFK'         => 'string',
+            'estadoCancion'     => 'required|string|min:1',
+        ];
+        $this->validate($request,$campos);
+        $cancion = $request->except('_token');
+        Cancion::insert($cancion);
+        return redirect('cancion');
     }
 
     /**
@@ -57,9 +71,11 @@ class CancionController extends Controller
      * @param  \App\Cancion  $cancion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cancion $cancion)
+    public function edit($id)
     {
-        return view('cancion.edit');
+        $albumes['albumes'] = Album::all();
+        $cancion = Cancion::findOrfail($id);
+        return view('cancion.edit',compact('cancion'),$albumes);
     }
 
     /**

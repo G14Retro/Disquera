@@ -1,86 +1,76 @@
 <div class="row">
-    <div class="ml-3 mb-3 mr-4">
-    <label for="tipoDocumento">Tipo de documento</label>
-        <select class="form-select form-control" name="tipoDocumento" id="tipoDocumento" 
-        aria-label="Default select example">
-        <option selected>Seleccione una opción</option>
-        <option value="cc" {{isset($artista->tipoDocumento) && $artista->tipoDocumento == 'cc' ? 'selected':'true'}} >Cédula de ciudadanía</option>
-        <option value="ce" {{isset($artista->tipoDocumento) && $artista->tipoDocumento == 'ce' ? 'selected':'true'}}>Cédula de extrangería</option>
-        <option value="ti" {{isset($artista->tipoDocumento) && $artista->tipoDocumento == 'ti' ? 'selected':'true'}}>Tarjeta de identidad</option>
-        <option value="pp" {{isset($artista->tipoDocumento) && $artista->tipoDocumento == 'pp' ? 'selected':'true'}}>Pasaporte</option>
-        <option value="nit" {{isset($artista->tipoDocumento) && $artista->tipoDocumento == 'nit' ? 'selected':'true'}}>Nit</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="noDocumento">Número de documento</label>
-        <input type="number" name="noDocumento" id="noDocumento" class="form-control"
-        placeholder="Ingrese el número de documento"
-        value="{{isset($artista->noDocumento)?$artista->noDocumento:''}}">
-    </div>
-</div>
-<div class="row">
-    <div class="ml-3 mb-3 mr-4">
-        <label for="nombreArtista">Nombre</label>
-        <input type="text" name="nombreArtista" id="nombreArtista" class="form-control"
+    <div class="ml-3 mb-3 col-5">
+        <label for="nombreCancion">Nombre canción</label>
+        <input type="text" name="nombreCancion" id="nombreCancion" class="form-control"
         placeholder="Ingrese el nombre"
-        value="{{isset($artista->nombreArtista)?$artista->nombreArtista:''}}">
+        value="{{isset($cancion->nombreCancion)?$cancion->nombreCancion:old('nombreCancion')}}"
+        aria-describedby="nombreHelp">
+        @error('nombreCancion')
+        <small id="nombreHelp" class="form-text text-danger">
+            * {{$message}}
+        </small>
+        @enderror
     </div>
-    <div class="mb-3">
-        <label for="apellidoArtista">Apellido</label>
-        <input type="text" name="apellidoArtista" id="apellidoArtista" class="form-control"
+    <div class="mb-3 col-5">
+        <label for="fechaGrabacion">Fecha de grabación</label>
+        <input type="date" name="fechaGrabacion" id="fechaGrabacion" class="form-control"
         placeholder="Ingrese el apellido"
-        value="{{isset($artista->apellidoArtista)?$artista->apellidoArtista:''}}">
-    </div>
-</div>
-
-<div class="mb-3">
-    <label for="nombreArtistico">Nombre Artístico</label>
-    <input type="text" name="nombreArtistico" id="nombreArtistico" class="form-control"
-    placeholder="Ingrese el nombre artístico"
-    value="{{isset($artista->nombreArtistico)?$artista->nombreArtistico:''}}">
-</div>
-
-<div class="row">
-    <div class="ml-3 mb-3">
-        <label for="foto">Foto del artista</label>
-        <input type="file" name="foto" id="foto" class="form-control"
-        value="{{isset($artista->foto)?$artista->foto:''}}">
+        value="{{isset($cancion->fechaGrabacion)?$cancion->fechaGrabacion:old('fechaGrabacion')}}"
+        aria-describedby="fechaHelp">
+        @error('fechaGrabacion')
+        <small id="fechaHelp" class="form-text text-danger">
+            * {{$message}}
+        </small>
+        @enderror
     </div>
 </div>
 <div class="row">
-    <div class="ml-3 mb-3 mr-4">
-        <label for="feNacimAtista">Fecha de nacimiento</label>
-        <input type="date" name="feNacimAtista" id="feNacimAtista" class="form-control"
-        placeholder="Ingrese la fecha de nacimiento"
-        value="{{isset($artista->feNacimAtista)?$artista->feNacimAtista:''}}">
+    <div class="ml-3 mb-3 col-5">
+        <label for="duracionCancion">Duración</label>
+        <input type="text" name="duracionCancion" id="duracionCancion" class="form-control"
+        placeholder="Ingrese la duración"
+        value="{{isset($cancion->duracionCancion)?$cancion->duracionCancion:old('duracionCancion')}}"
+        aria-describedby="duracionHelp">
+        @error('duracionCancion')
+        <small id="duracionHelp" class="form-text text-danger">
+            * {{$message}}
+        </small>
+    @enderror
     </div>
-    <div class="mb-3">
-        <label for="emailArtista">Correo</label>
-        <input type="mail" name="emailArtista" id="emailArtista" class="form-control"
-        placeholder="Ingrese un correo electrónico"
-        value="{{isset($artista->emailArtista)?$artista->emailArtista:''}}">
+    <div class="mb-3 col-5">
+        <label for="idAlbumFK">Album</label>
+        <select class="form-select form-control" name="idAlbumFK" id="idAlbumFK"
+            aria-label="Default select example"
+            aria-describedby="albumHelp">
+        <option selected>Seleccione una opción</option>
+        @foreach($albumes as $a)
+        <option value="{{$a->id}}" {{isset($cancion->idAlbumFK) && $cancion->idAlbumFK== $a->id? 'selected':true}}>{{$a->nombreAlbum}}</option>
+        @endforeach
+        </select>
+        @error('idAlbumFK')
+            <small id="albumHelp" class="form-text text-danger">
+                * {{$message}}
+            </small>
+        @enderror
     </div>
 </div>
 
-<div class="mb-3">
-<label for="idDisqueraFK">Disquera</label>
-    <select class="form-select form-control" name="idDisqueraFK" id="idDisqueraFK"
-     aria-label="Default select example">
-    <option selected>Seleccione una opción</option>
-    @foreach($albumes as $a)
-    <option value="{{$a->id}}" {{isset($artista->idDisqueraFK) && $artista->idDisqueraFK== $d->id? 'selected':true}}>{{$d->nombreDisquera}}</option>
-    @endforeach
-    </select>
-</div>
-
-<div class="mb-3">
-<label for="estadoArtista">Estado</label>
-<select class="form-select form-control"  name="estadoArtista" id="estadoArtista"
- aria-label="Default select example">
-    <option selected>Seleccione una opción</option>
-    <option value="activo" {{isset($artista->tipoDocumento) && $artista->estadoArtista == 'activo' ? 'selected':'true'}}>Activo</option>
-    <option value="inactivo" {{isset($artista->tipoDocumento) && $artista->estadoArtista == 'inactivo' ? 'selected':'true'}}>Inactivo</option>
-    </select>
+<div class="row">
+    <div class="mb-3 ml-3 col-10">
+        <label for="estadoCancion">Estado</label>
+        <select class="form-select form-control"  name="estadoCancion" id="estadoCancion"
+         aria-label="Default select example"
+         aria-describedby="estadoHelp">
+            <option selected>Seleccione una opción</option>
+            <option value="activo" {{isset($cancion->estadoCancion) && $cancion->estadoCancion == 'activo' ? 'selected':'true'}}>Activo</option>
+            <option value="inactivo" {{isset($cancion->estadoCancion) && $cancion->estadoCancion == 'inactivo' ? 'selected':'true'}}>Inactivo</option>
+            </select>
+            @error('estadoCancion')
+                <small id="estadoHelp" class="form-text text-danger">
+                    * {{$message}}
+                </small>
+            @enderror
+    </div>
 </div>
 
 <div class="mb-3 float-right">

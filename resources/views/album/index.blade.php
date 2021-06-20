@@ -10,7 +10,16 @@
         <div class="card mr-3 mt-3" style="width: 18rem;">
         <img src="{{ asset('storage').'/uploads/albumes/'.$a->id.'/'.$a->foto}}" class="card-img-top">
             <div class="card-body bg-secondary">
-                <h5 class="card-title text-light">{{$a->nombreArtistico}}</h5>
+                <h5 class="card-title text-light">Album: {{$a->nombreAlbum}}</h5>
+                <p>
+                    Año publicación: {{$a->anioPublicacion}}
+                </p>
+                <p>
+                    Artista: {{$a->nombreArtistico}}
+                </p>
+                <p>
+                    Genéro: {{$a->nombreGenero}}
+                </p>
                 <div class="row">
                 <a href="{{url('/album/'.$a->id.'/edit')}}" class="btn btn-info mr-2">Editar</a></th>
                 <form action="{{url('/album/'.$a->id)}}" method="POST">
