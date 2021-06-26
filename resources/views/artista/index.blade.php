@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<h3>Artistas</h3>
     <div class="float-right m-3">
         <a class="btn btn-primary" href="{{url('/artista/create')}}">Nuevo</a>
     </div>
@@ -8,7 +9,7 @@
     <br>
         <div class="container">
             <div class="row">
-    @foreach($artistas as $a)
+            @foreach($artistas as $a)
             <div class="card mr-3 mt-3" style="width: 18rem;">
                 <img src="{{ asset('storage').'/uploads/'.$a->id.'/'.$a->foto}}" class="card-img-top">
                 <div class="card-body bg-secondary">
@@ -24,7 +25,7 @@
                     </div>
                 </div>
             </div>
-    @endforeach
+             @endforeach
             </div>
         </div>
 @endsection

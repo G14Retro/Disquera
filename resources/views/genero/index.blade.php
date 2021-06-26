@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<h3>Generos Musicales</h3>
 <div class="float-right m-3">
     <a class="btn btn-primary" href="{{url('/genero-musical/create')}}">Nuevo</a>
 </div>

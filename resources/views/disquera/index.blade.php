@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<h3>Disqueras</h3>
 <div class="float-right m-3">
     <a class="btn btn-primary" href="{{url('/disquera/create')}}">Nuevo</a>
 </div>

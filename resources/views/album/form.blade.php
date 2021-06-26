@@ -9,7 +9,7 @@
     <select class="form-select form-control" name="anioPublicacion" id="anioPublicacion" 
     aria-label="Default select example">
     <option selected>Seleccione una opción</option>
-    @for($anio=1990;$anio <=2021;$anio++)
+    @for($anio=1900;$anio <=2021;$anio++)
     <option value="{{$anio}}" {{isset($album->anioPublicacion) && $album->anioPublicacion == $anio ? 'selected':'true'}}>{{$anio}}</option>
     @endfor
     </select>
